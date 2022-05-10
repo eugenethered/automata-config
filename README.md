@@ -1,2 +1,4 @@
-# automata-config
-Automata Config
+# Automata Config
+
+## Packaging
+`python3 -m build`
