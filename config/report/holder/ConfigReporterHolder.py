@@ -11,3 +11,7 @@ class ConfigReporterHolder:
             missing_repository = MissingRepository(options)
             cls.__instance = ConfigReporter(missing_repository)
         return cls.__instance
+
+    @staticmethod
+    def set_ignore_check_func(func):
+        ConfigReporterHolder.__instance.set_ignored_check_func(func)
