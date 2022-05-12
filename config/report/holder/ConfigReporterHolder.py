@@ -15,3 +15,7 @@ class ConfigReporterHolder:
     @staticmethod
     def set_ignore_check_func(func):
         ConfigReporterHolder.__instance.set_ignored_check_func(func)
+
+    @staticmethod
+    def delay_missing_storing():
+        ConfigReporterHolder.__instance.delay_missing_storing()
