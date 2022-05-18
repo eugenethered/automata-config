@@ -7,6 +7,7 @@ from missingrepo.repository.MissingRepository import MissingRepository
 class ConfigReporter:
 
     def __init__(self, missing_repository: MissingRepository):
+        self.log = logging.getLogger('ConfigReporter')
         self.missing_repository = missing_repository
         self.ignored_check_func = None
         self.local_missing_cache = self.init_local_missing_cache()
@@ -38,5 +39,5 @@ class ConfigReporter:
 
     def copy_local_missing_cache_to_repository(self):
         multiple_missing = list(self.local_missing_cache.values())
-        logging.debug(f'Delayed storing missing:[{len(multiple_missing)}]')
+        self.log.debug(f'Delayed storing missing:[{len(multiple_missing)}]')
         self.missing_repository.store(multiple_missing)
