@@ -8,7 +8,13 @@ class MissingRepositoryHelper(MissingRepository):
         self.stored_values = []
 
     def store(self, missing):
-        self.stored_values.append(missing)
+        if type(missing) is Missing:
+            self.stored_values.append(missing)
+        elif type(missing) is list:
+            self.stored_values = missing
 
     def is_already_missing(self, missing: Missing):
         return missing in self.stored_values
+
+    def retrieve(self):
+        return self.stored_values

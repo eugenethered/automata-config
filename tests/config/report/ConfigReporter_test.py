@@ -1,6 +1,5 @@
 import unittest
 
-from core.market.Market import Market
 from core.missing.Context import Context
 from missingrepo.Missing import Missing
 
@@ -13,10 +12,11 @@ class ConfigReporterTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.missing_repository = MissingRepositoryHelper()
         self.reporter = ConfigReporter(self.missing_repository)
-        self.test_missing = Missing('BTCOTC', Context.EXCHANGE, Market.BINANCE, 'Missing config')
+        self.test_missing = Missing('BTCOTC', Context.EXCHANGE, 'test', 'Missing config')
 
     def test_should_report_missing(self):
         self.reporter.report_missing(self.test_missing)
+        self.reporter.delay_missing_storing()
         stored_missing = self.missing_repository.stored_values[0]
         self.assertEqual(self.test_missing, stored_missing)
 
@@ -33,6 +33,7 @@ class ConfigReporterTestCase(unittest.TestCase):
             return missing.missing == 'SOMEOTHER'
         self.reporter.set_ignored_check_func(ignored_check)
         self.reporter.report_missing(self.test_missing)
+        self.reporter.delay_missing_storing()
         self.assertEqual(1, len(self.missing_repository.stored_values))
         self.assertIn(self.test_missing, self.missing_repository.stored_values)
 
@@ -41,6 +42,7 @@ class ConfigReporterTestCase(unittest.TestCase):
         def post_missing_report():
             self.callback_called = True
         self.reporter.report_missing(self.test_missing, post_missing_report)
+        self.reporter.delay_missing_storing()
         stored_missing = self.missing_repository.stored_values[0]
         self.assertEqual(self.test_missing, stored_missing)
         self.assertTrue(self.callback_called)
