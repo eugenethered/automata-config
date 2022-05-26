@@ -7,7 +7,7 @@ from missingrepo.repository.MissingRepository import MissingRepository
 class ConfigReporter:
 
     def __init__(self, missing_repository: MissingRepository):
-        self.log = logging.getLogger('ConfigReporter')
+        self.log = logging.getLogger(__name__)
         self.missing_repository = missing_repository
         self.ignored_check_func = None
         self.local_missing_cache = self.init_local_missing_cache()
